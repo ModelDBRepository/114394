@@ -1,0 +1,32 @@
+
+load_proc("nrnmainmenu")
+load_file("initiate_neuron.hoc")
+geom_nseg()
+parameters()
+init_channels()
+load_file("panels.ses")
+
+//run and stimulation protocol
+
+access soma
+
+objectvar Step
+Step = new IClamp(0.5)
+Step.del=302
+Step.dur=6   
+Step.amp=2
+ 
+Step.i=0
+
+
+proc init() {local saveDt, i
+  finitialize(v_init)
+  fcurrent()
+  saveDt = dt
+  dt = .5
+  for i=0,599 fadvance()
+  dt = saveDt
+}
+	
+
+
